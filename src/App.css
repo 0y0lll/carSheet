@@ -1,3 +1,9 @@
+@import url('NotoSansKR-Hestia.css');
+
+body {
+    font-family: 'Noto Sans Korean', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +41,79 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/*
+* custom
+* --
+* 비교 테이블
+*/
+.cmpr-table {
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+}
+.cmpr-table:not(:last-child) {
+  border-bottom: 0;
+}
+.cmpr-table .cmpr-table-col {
+  border-left: 1px solid #e2e2e2;
+  padding: 0;
+}
+.cmpr-table .cmpr-table-col:first-child {
+  border-left: 0;
+}
+.cmpr-table .cmpr-table-th {
+  width: 35%;
+  font-weight: 500;
+}
+.cmpr-table .cmpr-table-td {
+  width: 65%;
+  border-left: 1px solid #e2e2e2;
+}
+.cmpr-table .cmpr-table-th,
+.cmpr-table .cmpr-table-list > li,
+.cmpr-table .cmpr-table-col.text-col {
+  padding: 0 10px;
+}
+.cmpr-table .cmpr-table-list > li {
+  text-align: left;
+}
+.cmpr-table .cmpr-table-list > li:not(:last-child) {
+  border-bottom: 1px solid #e2e2e2;
+}
+.cmpr-table .cmpr-table-list {
+  color: #6d6d6d;
+}
+.cmpr-table .cmpr-thumbnail {
+  padding: 15px;
+}
+
+/*
+* custom
+* --
+* navbar
+*/
+.navbar {
+  padding: 1.5rem 2rem;
+}
+.navbar-light .navbar-brand {
+  color: #28b463;
+}
+
+/*
+* custom
+* --
+* main - 비교아이템 선택 스타일
+*/
+.cmpr-item-picker-wrap {
+  top: -15px;
+  left: -15px;
+}
+.cmpr-item-picker-wrap .cmpr-item-picker {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #28B463;
+  color: #fff;
 }
