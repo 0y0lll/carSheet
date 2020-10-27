@@ -142,7 +142,7 @@ function App() {
       return false
     } else {
       // sub1페이지로 데이터 전송
-      let query = '?id='
+      let query = '?id=';
       selectedItems.map(item => {
           query += item.id + ','
       })
