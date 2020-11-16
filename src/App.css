@@ -103,6 +103,18 @@ body {
 /*
 * custom
 * --
+* style
+*/
+.small-stroke {
+  width: 20px;
+  height: 1px;
+  background: #d2d2d2;
+  display: block;
+}
+
+/*
+* custom
+* --
 * main - 비교아이템 선택 스타일
 */
 .cmpr-item-picker-wrap {

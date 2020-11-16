@@ -1,84 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 /* 스타일 */
 import './App.css';
 /* 라우터 */
 import { BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
+
 /* 컴포넌트 */
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+
 import SearchBar from './components/SearchBar'
 import RecommendList from './components/RecommendList'
 import MainList from './components/MainList'
-import Footer from './components/Footer'
-
 import CmprResult from './components/CmprResult'
 import AjaxTest from './components/AjaxTest'
 
-const cars = [
-  {
-    id: 1,
-    name: '2020 쏘나타',
-    brand: '현대',
-    price: '2,386~3,367만원',
-    img: 'https://img.danawa.com/images/news/images/000269/20190416133714529_T31QSVL9.jpg',
-    checked: false
-  },
-  {
-    id: 2,
-    name: '2020 아반떼',
-    brand: '현대',
-    price: '1,570~2,779만원',
-    img:'https://cdn.top-rider.com/news/photo/201811/27636_93030_1710.jpg',
-    checked: false
-  },
-  {
-    id: 3,
-    name: '2021 K5',
-    brand: '기아',
-    price: '2,356~3,151만원',
-    img:'https://post-phinf.pstatic.net/MjAyMDEwMTZfMTQ3/MDAxNjAyODA4MTE0NzI4.1klBz0RKXx6rsjtBBD8agvxx_WUMY0ReO0dwfzvaIOsg.0LjdWkAMXyAv715F3XHBQKNo5TNqFpb7pmA9MvD6dHIg.JPEG/image_2804645871602808093548.jpg?type=w1200',
-    checked: false
-  },
-  {
-    id: 4,
-    name: '2021 셀토스',
-    brand: '기아',
-    price: '1,934~2,896만원',
-    img: 'https://cdn.top-rider.com/news/photo/201906/28274_100463_270.jpg',
-    checked: false
-  },
-  {
-    id: 5,
-    name: '2021 볼보 XC40',
-    brand: '볼보',
-    price: '4,670~5,130만원',
-    img: 'https://lh3.googleusercontent.com/proxy/0eIQBlSs9GdTDyaYKLhgQV2kxz59OkatB_Mtfc8QJ9gwnRqss-RtEqr4bDnrezpc3Im78sW9HLyBpAvXR0f9y7bm0TcH5izWZMzPoGWXRhIBClPDAo7ak8FRIRnjn9AYGbe1qZOk',
-    checked: false
-  },
-  {
-    id: 6,
-    name: '2020 폭스바겐 제타',
-    brand: '폭스바겐',
-    price: '2,714~2,951만원',
-    img:'https://t1.daumcdn.net/cfile/tistory/99D82D385C0F6A022C',
-    checked: false
-  },
-  {
-    id: 7,
-    name: '2020 벤츠 G클래스 AMG',
-    brand: '벤츠',
-    price: '21,500~24,300만원',
-    img:'https://www.autodaily.co.kr/news/photo/202003/417408_51610_2715.jpg',
-    checked: false
-  },
-  {
-    id: 8,
-    name: '2020 포르쉐 카이엔 GTS',
-    brand: '포르쉐',
-    price: '미정',
-    img: 'https://post-phinf.pstatic.net/MjAyMDA5MTZfMzAw/MDAxNjAwMjEyNDg2MDMy.0yEvTPnRADuQ3lNHpj9Mny6a74b4mzTYeZAjFUhaUmkg.iKZqCXcJ9TsKQvtxJ1dsq5cFL-cGMWzEovLmJAMUwhog.JPEG/2020-porsche-cayenne-GTS-1.jpg?type=w1200',
-    checked: false
-  },
-]
+import CarList from './pages/CarList'
+
 
 /**
  * App
@@ -91,14 +28,32 @@ function App() {
   // 아이템 상태
   const [selectMode, setSelectMode] = React.useState(false)
   //
-  const [items, setItems] = React.useState(cars);
+  const [items, setItems] = React.useState();
   // router location
   const history = useHistory();
 
-  /*  */
-  // let searchBar;
-  // let recommendList;
-  // let mainList;
+  /**
+   * 아이템 목록 불러오기
+   * --
+   * items에 setItems 하기 위한 함수
+   */
+  useEffect(() => {
+    fetch('http://localhost:3001/cars')
+      .then(res => res.json())
+      .then(data => setItems(data))
+      .catch(err => console.log(err));
+  }, [])
+
+  /**
+   * Node.js 테스트
+   * --
+   */
+  // const nodeTest = () => {
+  //   fetch('http://localhost:3001/cars')
+  //     .then(res => res.json())
+  //     .then(data => console.log(data));
+  // }
+  // nodeTest()
 
   /**
    * 항목선택 시 발생하는 함수
@@ -122,12 +77,17 @@ function App() {
    * @param {*} id
    */
   const handleChangeCheck = (id) => {
-    const itemsCopy = items.slice(0)
+    /*
+     object를 slice하여 복제할 수 없으므로 꼼수 써야함
+     JSON.stringify -> JSON.parse
+    */
+    // const itemsCopy = items.slice(0)
+    const itemsCopy = JSON.parse(JSON.stringify(items.cars))
     const fid = itemsCopy.findIndex(item => {
       return item.id === id
     })
     itemsCopy[fid].checked = !itemsCopy[fid].checked
-    setItems(itemsCopy)
+    setItems({cars: itemsCopy})
   }
 
   /**
@@ -135,8 +95,9 @@ function App() {
    * --
    */
   const handleSelectedList = () => {
+    // console.log(items);
     // console.log(items.filter(item => item.checked === true));
-    const selectedItems = items.filter(item => item.checked === true)
+    const selectedItems = JSON.parse(JSON.stringify(items.cars)).filter(item => item.checked === true)
     if (selectedItems.length <= 1) {
       alert('비교할 대상을 둘 이상 선택하세요.')
       return false
@@ -159,11 +120,19 @@ function App() {
 
       <div className="container">
         {/* 메인 상단 - 검색영역 */}
-        <Route exact path="/" component={SearchBar} />
+        <SearchBar />
+        {/* <Route exact path="/" component={SearchBar} /> */}
         {/* {searchBar} */}
 
         {/* 메인 상단 - 추천 아이템 리스트 : 최소 5개, 최대 10개 출력. 6개 이후 슬라이드 */}
-        <Route exact path="/" component={RecommendList} />
+        <Route exact path="/"
+          render={() =>
+            <RecommendList
+              data={items}
+              // data={() => onLoadItems()}
+            />
+          }
+        />
 
         {/* 메인 콘텐츠 - 인기별 아이템 리스트 : 한줄에 4개씩 출력. 무한 스크롤*/}
         <Route exact path="/"
@@ -175,11 +144,12 @@ function App() {
               onChangeCheck={(id) => handleChangeCheck(id)}
               onCreateList = {() => handleSelectedList()}
             />
-          } />
+          }
+        />
 
-        {/* test */}
         <Route exat path="/cmprResult" component={CmprResult}/>
         <Route exat path="/ajaxTest" component={AjaxTest} />
+        <Route exat path="/cars" component={CarList} />
 
         {/* item view */}
         {/* <Route path="/view/:id" component={} /> */}

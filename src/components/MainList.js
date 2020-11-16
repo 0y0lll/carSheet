@@ -25,14 +25,8 @@ const mainList = (props) => {
         return (
             <div className="col-3 mb-3" key={item.id}>
                 { item.checked && selectMode ? cmprItemPicker : '' }
-                {/* <div
-                    className=""
-                    style={{
-                        border: item.checked && selectMode ? '2px solid blue' : ''
-                    }}
-                > */}
 
-                <img src={item.img} width={253} height={153} alt="..." />
+                <img src={item.conceptImg} width={253} height={153} alt="..." />
                 <div className="mt-3 text-left">
                     <span>{item.brand}</span>
                     <h5 className="card-title">{item.name}</h5>
@@ -40,7 +34,7 @@ const mainList = (props) => {
                     {/* <a href="#" className="btn btn-primary stretched-link">Go somewhere</a> */}
                     {!selectMode
                         ? <Link to="#" className="stretched-link"></Link>
-                        : <Link className="stretched-link" onClick={() => onChangeCheck(item.id)}></Link>
+                        : <Link to="#" className="stretched-link" onClick={() => onChangeCheck(item.id)}></Link>
                     }
                 </div>
             </div>
@@ -66,7 +60,8 @@ const mainList = (props) => {
                     </div>
                 </div>
                 {/* <div className=""> */}
-                    {data.map(item => handleCreateItem(item))}
+                {/* {data && data.map(item => handleCreateItem(item))} */}
+                {data && data.cars && data.cars.map(car => (handleCreateItem(car)))}
                 {/* </div> */}
             </div>
         </React.Fragment>

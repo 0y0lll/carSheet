@@ -29,7 +29,7 @@ const CmprResult = () => {
             {/* 썸네일 */}
             <div className="row justify-content-between cmpr-table">
                 <div className="col-3 cmpr-table-col"></div>
-                {postData.filter(post => post.id <= 3).map(post => (
+                {postData.filter((post,index) => index < 3).map(post => (
                     <div className="col-3 cmpr-table-col cmpr-thumbnail" key={post.id}>
                         <img src="https://img.khan.co.kr/news/2019/10/07/l_2019100701000915200069141.jpg" width="253" height="153" alt="..."/>
                     </div>
