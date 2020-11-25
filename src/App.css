@@ -129,3 +129,33 @@ body {
   background: #28B463;
   color: #fff;
 }
+
+/*
+* custom
+* --
+* cmprResult - 비교 리스트
+*/
+.cmpr-list {
+
+}
+.cmpr-list .cmpr-list-subject {
+  background: #f1f1f1;
+  font-size: 0.8rem;
+  color: #909090;
+}
+.cmpr-list .cmpr-list-subject,
+.cmpr-list .cmpr-list-content {
+  margin-bottom: 0;
+  line-height: 2;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.cmpr-list > *:last-child .cmpr-list-content {
+  border-right: 0;
+}
+.cmpr-list .cmpr-list-subject > *,
+.cmpr-list .cmpr-list-content > * {
+  min-height: 32px;
+  padding-left: 15px;
+  padding-right: 15px;
+}

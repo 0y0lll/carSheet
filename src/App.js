@@ -80,9 +80,11 @@ function App() {
     /*
      object를 slice하여 복제할 수 없으므로 꼼수 써야함
      JSON.stringify -> JSON.parse
+     이건 옳지 않은 방법!!
     */
     // const itemsCopy = items.slice(0)
-    const itemsCopy = JSON.parse(JSON.stringify(items.cars))
+    // const itemsCopy = JSON.parse(JSON.stringify(items.cars))
+    const itemsCopy = [...items.cars];
     const fid = itemsCopy.findIndex(item => {
       return item.id === id
     })
@@ -99,16 +101,19 @@ function App() {
     // console.log(items.filter(item => item.checked === true));
     const selectedItems = JSON.parse(JSON.stringify(items.cars)).filter(item => item.checked === true)
     if (selectedItems.length <= 1) {
-      alert('비교할 대상을 둘 이상 선택하세요.')
+      alert('비교할 대상을 둘 이상 선택하세요.');
+      return false
+    } else if (selectedItems.length > 5) {
+      alert('최대 5개까지 선택가능 합니다.');
       return false
     } else {
       // sub1페이지로 데이터 전송
       let query = '?id=';
       selectedItems.map(item => {
-          query += item.id + ','
+        query += item.id + ',';
       })
       query = query.slice(0, -1)
-      history.push(`/cmprResult${query}`)
+      history.push(`/cmprResult${query}`);
     }
   }
 
