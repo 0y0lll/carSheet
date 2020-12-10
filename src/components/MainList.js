@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './FontAwesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const mainList = (props) => {
+const MainList = (props) => {
     const {
         data,
         selectMode,
@@ -68,4 +68,4 @@ const mainList = (props) => {
     )
 }
 
-export default mainList
+export default MainList

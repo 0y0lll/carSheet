@@ -3,17 +3,18 @@ import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 
 const CmprResult = ({ location, history }) => {
-    // console.log('class start');
     /* 쿼리로 받은 모델 id */
     const query = queryString.parse(location.search);
-
-    const [items, setItems] = React.useState();
-
     const ids = query.id && query.id.split(',');
+
+    /* 데이터 */
+    const [items, setItems] = React.useState([]);
+    // console.log('set items');
 
     /* fetch data */
     useEffect(() => {
-        if (!ids || ids.length > 5) {
+        // console.log('hook');
+        if (!ids || ids.length > 6) {
             alert('잘못된 접근 입니다.')
             history.push('/')
         } else {
@@ -25,26 +26,34 @@ const CmprResult = ({ location, history }) => {
             //     setItems({ cars : result })
             // }
             // fetchData();
+            // console.log('fetch');
             fetch('http://localhost:3001/cars')
                 .then(res => res.json())
                 .then(data => {
-                    // const filterData = data.cars.filter(car => car.year === '2020')
                     // items 가공 데이터
-                    const itemsFilterData = []
-                    // 선택아이디 반복
+                    // const filterData = data.cars.filter(car => car.year === '2020')
+                    // const dataCopy = [...data.cars];
+                    // console.log('dataCopy : ', dataCopy);
+                    const itemsFilterData = [];
+                    // // 선택아이디 반복
                     ids.map(id => {
                         // car 데이터 반복
                         data.cars.map(car => {
-                            if (car.id == id){
-                                itemsFilterData.push(car)
+                            if (car.id == id) {
+                                // console.log(car.id == id);
+                                itemsFilterData.push(car);
                             }
                         })
                     });
-                    setItems(itemsFilterData)
+                    // debugger
+                    setItems(itemsFilterData);
+                    // console.log(data);
+                    // console.log(data.cars);
+                    // setItems(data);
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err));
         }
-    }, [])
+    }, []);
 
     /* item element */
     const handleCreateItem = (item) => {
@@ -97,6 +106,12 @@ const CmprResult = ({ location, history }) => {
         )
     }
 
+    /* save list */
+    const handleSaveList = () => {
+        alert('준비중')
+    }
+
+    /* RENDER */
     return (
         <React.Fragment>
             <h4>모델비교</h4>
@@ -137,9 +152,14 @@ const CmprResult = ({ location, history }) => {
                         <li>토크 벡터링</li>
                     </ul>
                 </div>
+
                 {/* 테이블 데이터 */}
                 { items && items.map(item => (handleCreateItem(item))) }
+
             </div>
+
+            {/* 저장 */}
+            <button type="button" onClick={() => handleSaveList()} className="btn btn-primary mb-5">저장</button>
         </React.Fragment>
     )
 }

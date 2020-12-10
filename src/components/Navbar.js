@@ -35,9 +35,9 @@ const Navbar = (props) => {
                             <FontAwesomeIcon icon="user"/>
                         </button>
                         <div className="dropdown-menu dropdown-menu-right">
-                            <button className="dropdown-item" type="button">Action</button>
-                            <button className="dropdown-item" type="button">Another action</button>
-                            <button className="dropdown-item" type="button">Something else here</button>
+                            {/* <Link to="/signIn" className="dropdown-item" type="button">Sign in</Link> */}
+                            <Link to="/signIn" className="dropdown-item" type="button">Sign in</Link>
+                            <Link to="" className="dropdown-item" type="button">Sign up</Link>
                         </div>
                     </div>
                 </div>
